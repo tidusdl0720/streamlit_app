@@ -14,7 +14,7 @@ DATA_PATH = "data/seoul_parking.csv"
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv(DATA_PATH, encoding="utf-8-sig")
+    df = pd.read_csv(DATA_PATH, encoding="cp949")
 
     # 무료 여부
     df["무료여부"] = df["유무료구분명"].apply(lambda x: "무료" if x == "무료" else "유료")
