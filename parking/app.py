@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import streamlit as st
 import folium
@@ -9,7 +10,9 @@ from streamlit_folium import st_folium
 # ----------------------------
 st.set_page_config(page_title="서울시 공영주차장 지도", page_icon="🅿️", layout="wide")
 
-DATA_PATH = "data/seoul_parking.csv"
+# app.py 파일 기준 절대경로로 데이터 파일 위치를 고정 (Streamlit Cloud 배포 시 경로 꼬임 방지)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_PATH = os.path.join(BASE_DIR, "data", "seoul_parking.csv")
 
 
 @st.cache_data
