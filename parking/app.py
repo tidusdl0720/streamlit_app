@@ -17,6 +17,15 @@ DATA_PATH = os.path.join(BASE_DIR, "data", "seoul_parking.csv")
 
 @st.cache_data
 def load_data():
+    # 🔧 디버그용: 서버가 실제로 인식하는 폴더 구조를 화면에 출력
+    st.write("BASE_DIR:", BASE_DIR)
+    st.write("BASE_DIR 안의 파일/폴더:", os.listdir(BASE_DIR))
+    data_dir = os.path.join(BASE_DIR, "data")
+    if os.path.isdir(data_dir):
+        st.write("data 폴더 안의 파일:", os.listdir(data_dir))
+    else:
+        st.write("⚠️ data 폴더 자체가 없습니다.")
+
     df = pd.read_csv(DATA_PATH, encoding="cp949")
 
     # 무료 여부
