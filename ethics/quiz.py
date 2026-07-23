@@ -19,7 +19,21 @@ import streamlit as st
 # =====================================================================
 st.set_page_config(page_title="생활과 윤리 퀴즈", page_icon="📘", layout="centered")
 
-IMAGE_DIR = "images"  # 사상가 사진을 넣어둘 폴더 (예: images/칸트.jpg)
+# 이 코드 파일이 있는 폴더 (이미지도 여기서 찾음)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def find_image(name):
+    """사상가 사진 찾기: 코드와 같은 폴더와 images/ 폴더를 모두 탐색.
+    파일명이 사상가 이름과 같으면 인식됨. (예: 칸트.jpg, 롤스.jpeg)"""
+    exts = (".jpg", ".jpeg", ".png", ".webp")
+    search_dirs = [BASE_DIR, os.path.join(BASE_DIR, "images")]
+    for d in search_dirs:
+        for ext in exts:
+            p = os.path.join(d, name + ext)
+            if os.path.exists(p):
+                return p
+    return None
 
 
 # =====================================================================
@@ -288,12 +302,7 @@ def show_face():
         done = qid in st.session_state.answered_ids
         with st.container(border=True):
             # 이미지가 있으면 사진, 없으면 힌트 표시
-            img_path = None
-            for ext in (".jpg", ".jpeg", ".png", ".webp"):
-                p = os.path.join(IMAGE_DIR, item["name"] + ext)
-                if os.path.exists(p):
-                    img_path = p
-                    break
+            img_path = find_image(item["name"])
 
             if img_path:
                 st.image(img_path, width=220)
